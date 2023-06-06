@@ -24,61 +24,60 @@ onMounted(() => {
   var option;
 
   myChart.showLoading();
-  api.get("/load_network")
-    .then((resp) => {
-      const json = resp.data
-      myChart.hideLoading();
-      myChart.setOption(
-        (option = {
-          title: {
-            text: "欺诈风险网络图",
-            top: "bottom",
-            left: "right",
+  api.get("/load_network").then((resp) => {
+    const json = resp.data;
+    myChart.hideLoading();
+    myChart.setOption(
+      (option = {
+        title: {
+          text: "欺诈风险网络图",
+          top: "bottom",
+          left: "right",
+        },
+        tooltip: {},
+        legend: [
+          {
+            // selectedMode: 'single',
+            data: json.categories.map(function (a) {
+              return a.name;
+            }),
           },
-          tooltip: {},
-          legend: [
-            {
-              // selectedMode: 'single',
-              data: json.categories.map(function (a) {
-                return a.name;
-              }),
+        ],
+        animationDurationUpdate: 1500,
+        animationEasingUpdate: "quinticInOut",
+        series: [
+          {
+            name: "Les Miserables",
+            type: "graph",
+            layout: "force",
+            force: {
+              initLayout: "circular",
+              gravity: 0,
+              repulsion: 800,
+              edgeLength: 2,
             },
-          ],
-          animationDurationUpdate: 1500,
-          animationEasingUpdate: "quinticInOut",
-          series: [
-            {
-              name: "Les Miserables",
-              type: "graph",
-              layout: "force",
-              force: {
-                initLayout: "circular",
-                gravity: 0,
-                repulsion: 800,
-                edgeLength: 2,
-              },
-              data: json.nodes,
-              links: json.links,
-              categories: json.categories,
-              roam: true,
-              label: {
-                position: "right",
-                formatter: "{b}",
-              },
+            data: json.nodes,
+            links: json.links,
+            categories: json.categories,
+            roam: true,
+            label: {
+              position: "right",
+              formatter: "{b}",
+            },
+            lineStyle: {
+              color: "source",
+              curveness: 0.3,
+            },
+            emphasis: {
+              focus: "adjacency",
               lineStyle: {
-                color: "source",
-                curveness: 0.3,
-              },
-              emphasis: {
-                focus: "adjacency",
-                lineStyle: {
-                  width: 10,
-                },
+                width: 10,
               },
             },
-          ],
-        })
-      );
-    });
+          },
+        ],
+      })
+    );
+  });
 });
 </script>

@@ -3,7 +3,9 @@
     <div class="col-12 col-md-6 q-pa-md">
       <network-card id="phauodife"></network-card>
     </div>
-    <div class="col-12 col-md-6 q-pa-md"><wordcloud-card id="1212"></wordcloud-card></div>
+    <div class="col-12 col-md-6 q-pa-md">
+      <wordcloud-card id="1212"></wordcloud-card>
+    </div>
     <div class="col-12 col-md-12 q-pa-md">
       <river-card id="121212"></river-card>
     </div>
