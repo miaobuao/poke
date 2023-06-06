@@ -10,7 +10,7 @@ import * as echarts from "echarts";
 import { onMounted } from "vue";
 import "echarts-wordcloud";
 import * as d3 from "d3";
-
+import { api } from "src/boot/axios";
 const props = defineProps({
   id: String,
   title: String,
@@ -25,32 +25,32 @@ onMounted(() => {
   let wordCloudColor = d3.schemeDark2;
 
   myChart.showLoading();
-  fetch("/wordcloud.json")
-    .then((d) => d.json())
-    .then((json) => {
-      myChart.hideLoading();
-      myChart.setOption({
-        visualMap: {
-          type: "piecewise",
-          show: true, // 展示图例
-          min: Math.min(...json.map((d) => d.value)),
-          max: Math.max(...json.map((d) => d.value)),
-          splitNumber: wordCloudColor.length,
-          color: wordCloudColor,
+  api.get("/load_wordcloud").then((resp) => {
+    const json = resp.data;
+
+    myChart.hideLoading();
+    myChart.setOption({
+      visualMap: {
+        type: "piecewise",
+        show: true, // 展示图例
+        min: Math.min(...json.map((d) => d.value)),
+        max: Math.max(...json.map((d) => d.value)),
+        splitNumber: wordCloudColor.length,
+        color: wordCloudColor,
+      },
+      series: [
+        {
+          type: "wordCloud",
+          gridSize: 14,
+          sizeRange: [16, 50],
+          rotationRange: [0, 0],
+          width: "100%",
+          height: "100%",
+          //数据
+          data: json,
         },
-        series: [
-          {
-            type: "wordCloud",
-            gridSize: 14,
-            sizeRange: [16, 50],
-            rotationRange: [0, 0],
-            width: "100%",
-            height: "100%",
-            //数据
-            data: json,
-          },
-        ],
-      });
+      ],
     });
+  });
 });
 </script>
