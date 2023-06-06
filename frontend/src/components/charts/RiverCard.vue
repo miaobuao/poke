@@ -1,6 +1,6 @@
 <template>
   <q-card class="full-width full-height">
-    <q-card-section class="text-h6">{{ title }}</q-card-section>
+    <q-card-section class="text-h6" v-if="title">{{ title }}</q-card-section>
     <canvas :id="id" class="full-width"></canvas>
   </q-card>
 </template>
