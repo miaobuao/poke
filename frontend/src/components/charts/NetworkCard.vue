@@ -8,6 +8,7 @@
 <script setup>
 import * as echarts from "echarts";
 import { onMounted } from "vue";
+import { api } from "src/boot/axios";
 
 const props = defineProps({
   id: String,
@@ -23,9 +24,9 @@ onMounted(() => {
   var option;
 
   myChart.showLoading();
-  fetch("/network_data.json")
-    .then((d) => d.json())
-    .then((json) => {
+  api.get("/load_network")
+    .then((resp) => {
+      const json = resp.data
       myChart.hideLoading();
       myChart.setOption(
         (option = {
