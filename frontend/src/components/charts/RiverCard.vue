@@ -46,8 +46,8 @@ onMounted(() => {
         singleAxis: {
           top: 50,
           bottom: 50,
-          axisTick: {},
-          axisLabel: {},
+          // axisTick: {},
+          // axisLabel: {},
           type: "time",
           axisPointer: {
             animation: true,
@@ -74,15 +74,13 @@ onMounted(() => {
                 shadowColor: "rgba(0, 0, 0, 0.8)",
               },
             },
-            data: json.map(e=>{
-              return [
-                e.time, e.value, e.group
-              ]
+            data: json.map((e) => {
+              return [e.time, e.value, e.group];
             }),
           },
         ],
-      }
-      console.log(opt.series[0].data);
+      };
+      opt && myChart.setOption(opt);
     });
 });
 </script>

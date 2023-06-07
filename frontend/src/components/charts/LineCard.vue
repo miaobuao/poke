@@ -11,7 +11,7 @@ import { api } from "src/boot/axios";
 const props = defineProps({
   id: String,
   title: String,
-  hospital: String,
+  hospitals: Array,
 });
 let draw;
 import { onMounted, watch } from "vue";
@@ -24,16 +24,18 @@ onMounted(() => {
   var myChart = echarts.init(chartDom);
   var option;
   draw = () => {
-    // api.post("/")
-    fetch("/line_data.json")
-      .then((d) => d.json())
-      .then((json) => {
+    api.post("/load_line", props.hospitals)
+      .then((resp) => {
+        const json = resp.data
         let tmp = [];
         for (const k in json) {
           tmp.push(json[k]);
         }
-        const data = tmp.slice(0, 10);
+        const data = tmp
         option = {
+          legend: {
+            data: props.hospitals,
+          },
           xAxis: {
             type: "category",
             data: data[0].map((d) => d.time),
@@ -46,11 +48,10 @@ onMounted(() => {
             type: "line",
           })),
         };
-        console.log(option.series);
         option && myChart.setOption(option);
       });
   };
-  draw()
+  draw();
 });
 watch(props, draw);
 </script>
