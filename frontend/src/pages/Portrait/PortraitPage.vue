@@ -1,4 +1,5 @@
 <template>
+  <!-- <div class="full-width full-height absolute"> -->
   <q-tabs
     v-model="tab"
     dense
@@ -14,15 +15,16 @@
 
   <q-separator />
 
-  <q-tab-panels v-model="tab" animated>
-    <q-tab-panel name="user">
-      <portrait-user></portrait-user>
+  <q-tab-panels v-model="tab" animated  class="full-width full-height">
+    <q-tab-panel name="user" class="full-width full-height">
+      <portrait-user class="full-width full-height"></portrait-user>
     </q-tab-panel>
 
-    <q-tab-panel name="hospital">
-      <portrait-hospital></portrait-hospital>
+    <q-tab-panel name="hospital" class="full-width full-height">
+      <portrait-hospital class="full-width full-height"></portrait-hospital>
     </q-tab-panel>
   </q-tab-panels>
+  <!-- </div> -->
 </template>
 
 <script setup>
