@@ -24,14 +24,14 @@ onMounted(() => {
   var myChart = echarts.init(chartDom);
   var option;
   draw = () => {
-    api.post("/load_line", props.hospitals)
-      .then((resp) => {
-        const json = resp.data
+    if (props.hospitals?.length??0)
+      api.post("/load_line", props.hospitals).then((resp) => {
+        const json = resp.data;
         let tmp = [];
         for (const k in json) {
           tmp.push(json[k]);
         }
-        const data = tmp
+        const data = tmp;
         option = {
           legend: {
             data: props.hospitals,
