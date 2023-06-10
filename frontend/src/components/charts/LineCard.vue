@@ -14,7 +14,7 @@ const props = defineProps({
   hospitals: Array,
 });
 let draw;
-import { onMounted, watch } from "vue";
+import { onMounted, watchEffect } from "vue";
 onMounted(() => {
   var chartDom = document.getElementById(props.id);
   const { clientHeight, clientWidth } = chartDom.parentElement;
@@ -43,9 +43,10 @@ onMounted(() => {
           yAxis: {
             type: "value",
           },
-          series: data.map((cell) => ({
+          series: data.map((cell, idx) => ({
             data: cell.map((d) => d.count),
             type: "line",
+            name: props.hospitals[idx]
           })),
         };
         option && myChart.setOption(option);
@@ -53,5 +54,7 @@ onMounted(() => {
   };
   draw();
 });
-watch(props, draw);
+watchEffect(()=>{
+  if(props.hospitals.length) draw()
+})
 </script>
