@@ -44,7 +44,7 @@ function onSubmit() {
     .then((d) => console.log(d))
     .catch((resp) => {
       console.log(resp);
-      predict.value = resp.data.map(d=>d.value)
+      predict.value = resp.data
     });
 }
 

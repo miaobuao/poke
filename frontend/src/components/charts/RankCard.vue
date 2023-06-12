@@ -29,7 +29,7 @@ function draw() {
     },
     yAxis: {
       type: "category",
-      data: props.data.map((_, idx) => idx + ""),
+      data: props.data.map((d) => d[0]),
       inverse: true,
       animationDuration: 300,
       animationDurationUpdate: 300,
@@ -37,7 +37,7 @@ function draw() {
     series: [
       {
         realtimeSort: true,
-        data: props.data,
+        data: props.data.map(d=>d[1]),
         type: "bar",
       },
     ],
