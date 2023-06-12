@@ -1,4 +1,5 @@
 <template>
+  <div>
   <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
     <q-file
       outlined
@@ -20,13 +21,17 @@
       <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
     </div>
   </q-form>
+  <rank-card id="rank-chart" v-if="predict.length" :data="predict"></rank-card>
+  </div>
 </template>
 
 <script setup>
+import RankCard from "src/components/charts/RankCard.vue";
 import { api } from "src/boot/axios";
 import { ref } from "vue";
 const age = ref();
 const name = ref("");
+const predict = ref([])
 const file = ref();
 function getSuffix(name) {
   return name.split(".").reverse()[0];
@@ -39,6 +44,7 @@ function onSubmit() {
     .then((d) => console.log(d))
     .catch((resp) => {
       console.log(resp);
+      predict.value = resp.data.map(d=>d.value)
     });
 }
 
