@@ -18,7 +18,12 @@
       </q-file>
 
       <div>
-        <q-btn label="Submit" type="submit" color="primary" />
+        <q-btn
+          label="Submit"
+          type="submit"
+          color="primary"
+          :loading="loading"
+        />
         <q-btn
           label="Reset"
           type="reset"
@@ -58,35 +63,49 @@ import RankCard from "src/components/charts/RankCard.vue";
 import { api } from "src/boot/axios";
 import { ref } from "vue";
 const $q = useQuasar();
-const age = ref();
-const name = ref("");
 const predict = ref([]);
 const file = ref();
 const selected = ref([]);
 const filterOptions = ref([]);
+const loading = ref(false);
 function getSuffix(name) {
   return name.split(".").reverse()[0];
 }
 function onSubmit() {
+  loading.value = true;
   let formData = new FormData();
   formData.append("file", file.value);
-  api.post("/upload", formData).then((resp) => {
-    const { data } = resp;
-    if (data.message)
-      predict.value = data.message.map((d, idx) => {
-        d.id = idx;
-        return d;
-      });
-    else if (data.error)
-      $q.notify({
-        type: "negative",
-        message: data.error,
-      });
-  });
+  api
+    .post("/upload", formData)
+    .then((resp) => {
+      const { data } = resp;
+      if (data.message)
+        predict.value = data.message.map((d, idx) => {
+          d.id = idx;
+          return d;
+        });
+      else if (data.error)
+        $q.notify({
+          type: "negative",
+          message: data.error,
+        });
+    })
+    .catch(()=>{
+        $q.notify({
+          type: "negative",
+          message: "出问题了!",
+        });
+    })
+    .finally(() => {
+      loading.value = false;
+    });
 }
 
 function onReset() {
   file.value = undefined;
+  selected.value = [];
+  predict.value = [];
+  filterOptions.value = [];
 }
 
 let filter_val = "";
