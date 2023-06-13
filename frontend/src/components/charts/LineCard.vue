@@ -1,6 +1,8 @@
 <template>
   <q-card class="full-width full-height">
-    <q-card-section class="text-h6" v-if="title">{{ title }}</q-card-section>
+    <q-card-section class="text-h6 text-center" v-if="title">{{
+      title
+    }}</q-card-section>
     <canvas :id="id" class="full-width"></canvas>
   </q-card>
 </template>
@@ -24,7 +26,7 @@ onMounted(() => {
   var myChart = echarts.init(chartDom);
   var option;
   draw = () => {
-    if (props.hospitals?.length??0)
+    if (props.hospitals?.length ?? 0)
       api.post("/load_line", props.hospitals).then((resp) => {
         const json = resp.data;
         let tmp = [];
@@ -33,20 +35,27 @@ onMounted(() => {
         }
         const data = tmp;
         option = {
+          tooltip: {
+            trigger: "axis",
+            axisPointer: { type: "cross" },
+          },
           legend: {
             data: props.hospitals,
           },
           xAxis: {
             type: "category",
             data: data[0].map((d) => d.time),
+            name: "日期",
           },
           yAxis: {
             type: "value",
+            name: "理赔人数（单位:人）",
           },
+
           series: data.map((cell, idx) => ({
             data: cell.map((d) => d.count),
             type: "line",
-            name: props.hospitals[idx]
+            name: props.hospitals[idx],
           })),
         };
         option && myChart.setOption(option);
@@ -54,7 +63,7 @@ onMounted(() => {
   };
   draw();
 });
-watchEffect(()=>{
-  if(props.hospitals.length) draw()
-})
+watchEffect(() => {
+  if (props.hospitals.length) draw();
+});
 </script>

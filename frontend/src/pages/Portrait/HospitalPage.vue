@@ -18,6 +18,7 @@
     </div>
     <div class="col-9 full-width">
       <line-card
+        title="医疗机构的欺诈频次折线图"
         id="hospital-line-card"
         class="full-width"
         :hospitals="selected"

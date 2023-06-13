@@ -8,7 +8,7 @@
           <q-avatar square>
             <baoxian-icon></baoxian-icon>
           </q-avatar>
-          frontEnd
+          医眼盯真
         </q-toolbar-title>
       </q-toolbar>
     </q-header>

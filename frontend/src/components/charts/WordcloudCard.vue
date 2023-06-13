@@ -38,13 +38,18 @@ onMounted(() => {
         splitNumber: wordCloudColor.length,
         color: wordCloudColor,
       },
+      title: {
+        text: "疾病频数\n词云图",
+        top: "bottom",
+        left: "right",
+      },
       series: [
         {
           type: "wordCloud",
           gridSize: 14,
           sizeRange: [16, 50],
-          rotationRange: [0, 0],
-          width: "100%",
+          rotationRange: [0, 90],
+          width: "75%",
           height: "100%",
           //数据
           data: json,

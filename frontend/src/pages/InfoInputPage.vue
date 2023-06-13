@@ -85,7 +85,9 @@ function onSubmit() {
   });
 }
 
-function onReset() {}
+function onReset() {
+  file.value = undefined;
+}
 
 let filter_val = "";
 function updateFilterOptions(value) {

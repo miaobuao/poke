@@ -28,8 +28,15 @@ onMounted(() => {
     json.forEach((e) => (legend[e.group] = (legend[e.group] ?? 0) + 1));
     myChart.hideLoading();
     const opt = {
+      title: {
+        text: "日区间人员理赔申请河流图",
+        top: "top",
+        left: "center",
+      },
       tooltip: {
-        trigger: "axis",
+        show: true,
+
+        trigger: "item",
         axisPointer: {
           type: "line",
           lineStyle: {
@@ -45,8 +52,8 @@ onMounted(() => {
       singleAxis: {
         top: 50,
         bottom: 50,
-        // axisTick: {},
-        // axisLabel: {},
+        // axisTick: { show: false },
+        // axisLabel: { show: false },
         type: "time",
         axisPointer: {
           animation: true,
@@ -72,6 +79,9 @@ onMounted(() => {
               shadowBlur: 20,
               shadowColor: "rgba(0, 0, 0, 0.8)",
             },
+          },
+          label: {
+            show: false,
           },
           data: json.map((e) => {
             return [e.time, e.value, e.group];

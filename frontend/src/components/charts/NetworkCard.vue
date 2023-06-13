@@ -30,11 +30,50 @@ onMounted(() => {
     myChart.setOption(
       (option = {
         title: {
-          text: "欺诈风险网络图",
+          text: "智能风控网络图",
           top: "bottom",
           left: "right",
         },
-        tooltip: {},
+        tooltip: {
+          // z: 60,
+          // show: true,
+          // showContent: true,
+          // trigger: "item",
+          // triggerOn: "mousemove | click",
+          // alwaysShowContent: false,
+          // displayMode: "single",
+          // renderMode: "auto",
+          // confine: null,
+          // showDelay: 0,
+          // hideDelay: 100,
+          // transitionDuration: 0.4,
+          // enterable: false,
+          // backgroundColor: "#fff",
+          // shadowBlur: 10,
+          // shadowColor: "rgba(0, 0, 0, 0.2)",
+          // shadowOffsetX: 1,
+          // shadowOffsetY: 2,
+          // borderRadius: 4,
+          // borderWidth: 1,
+          // padding: null,
+          // extraCssText: "",
+          // axisPointer: {
+          //   type: "line",
+          //   axis: "auto",
+          //   animation: "auto",
+          //   animationDurationUpdate: 200,
+          //   animationEasingUpdate: "exponentialOut",
+          //   crossStyle: {
+          //     color: "#999",
+          //     width: 1,
+          //     type: "dashed",
+          //   },
+          // },
+          // textStyle: {
+          //   color: "#666",
+          //   fontSize: 14,
+          // },
+        },
         legend: [
           {
             // selectedMode: 'single',
@@ -62,7 +101,17 @@ onMounted(() => {
             roam: true,
             label: {
               position: "right",
-              formatter: "{b}",
+              formatter: function (params) {
+                // 设置提示框内容的格式化函数
+                if (params.dataType == "edge") {
+                  console.log(params.data.source + " > " + params.data.target);
+                  // 如果是边缘，则显示源节点和目标节点
+                  return params.data.source + " > " + params.data.target;
+                } else {
+                  // 如果是节点，则显示节点名称和数值
+                  return params.data.name + ": " + params.data.value;
+                }
+              },
             },
             lineStyle: {
               color: "source",

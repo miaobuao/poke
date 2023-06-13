@@ -24,6 +24,11 @@ function draw() {
   let option;
 
   option = {
+    title: {
+      text: "欺诈风险概率rk图",
+      top: "top",
+      left: "center",
+    },
     xAxis: {
       max: "dataMax",
     },
@@ -37,7 +42,7 @@ function draw() {
     series: [
       {
         realtimeSort: true,
-        data: props.data.map(d=>d[1]),
+        data: props.data.map((d) => d[1]),
         type: "bar",
       },
     ],
